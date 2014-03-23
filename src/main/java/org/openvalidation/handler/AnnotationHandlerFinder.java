@@ -1,9 +1,9 @@
-package org.bevoid.openvalidation.handler;
+package org.openvalidation.handler;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bevoid.openvalidation.CheckItem;
+import org.openvalidation.CheckItem;
 
 /**
  * 
@@ -12,7 +12,7 @@ import org.bevoid.openvalidation.CheckItem;
  */
 public class AnnotationHandlerFinder {
 
-    private final static String                  ANNOTATION_PACKAGE_PRIFIX = "org.bevoid.openvalidation.handler";
+    private final static String                  ANNOTATION_PACKAGE_PRIFIX = "org.openvalidation.handler";
 
     @SuppressWarnings("rawtypes")
     private static Map<Class, AnnotationHandler> cache                     = new HashMap<Class, AnnotationHandler>();

@@ -1,6 +1,6 @@
-package org.bevoid.openvalidation.handler;
+package org.openvalidation.handler;
 
-import org.bevoid.openvalidation.CheckItem;
+import org.openvalidation.CheckItem;
 
 /**
  * 

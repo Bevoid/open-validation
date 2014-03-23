@@ -1,4 +1,4 @@
-package org.bevoid.openvalidation;
+package org.openvalidation;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,15 +17,15 @@ public class ValidationTest {
     }
 
     /**
-     * Test method for {@link org.bevoid.openvalidation.Validation#validateBean(java.lang.Object)}.
+     * Test method for {@link org.openvalidation.Validation#validateBean(java.lang.Object)}.
      */
     @Test
     public void testValidateBean() {
         TestBean testBean = new TestBean();
         validation.validateBean(testBean);
-        Assert.assertEquals(validation.getValidateError().size(), 2);
         for (ValidateError ve : validation.getValidateError()) {
             System.out.println(ve);
         }
+        Assert.assertEquals(validation.getValidateError().size(), 3);
     }
 }

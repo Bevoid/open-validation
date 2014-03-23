@@ -1,11 +1,7 @@
-/**
- * Alipay.com Inc.
- * Copyright (c) 2004-2014 All Rights Reserved.
- */
-package org.bevoid.openvalidation.handler;
+package org.openvalidation.handler;
 
-import org.bevoid.openvalidation.CheckItem;
-import org.bevoid.openvalidation.annotation.Max;
+import org.openvalidation.CheckItem;
+import org.openvalidation.annotation.Max;
 
 /**
  * 
@@ -15,7 +11,7 @@ import org.bevoid.openvalidation.annotation.Max;
 public class MaxHandler implements AnnotationHandler {
 
     /** 
-     * @see org.bevoid.openvalidation.handler.AnnotationHandler#check(org.bevoid.openvalidation.CheckItem)
+     * @see org.openvalidation.handler.AnnotationHandler#check(org.openvalidation.CheckItem)
      */
     public boolean check(CheckItem checkItem) {
         try {
