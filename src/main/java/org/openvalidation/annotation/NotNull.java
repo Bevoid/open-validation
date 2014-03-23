@@ -1,4 +1,4 @@
-package org.bevoid.openvalidation.annotation;
+package org.openvalidation.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * @version $Id: NotNull.java, v 0.1 2014年3月19日 下午2:59:23 Bevoid Exp $
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ ElementType.FIELD, ElementType.METHOD })
 public @interface NotNull {
 
 }

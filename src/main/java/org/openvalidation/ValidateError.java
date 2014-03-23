@@ -1,4 +1,4 @@
-package org.bevoid.openvalidation;
+package org.openvalidation;
 
 /**
  * 
@@ -17,9 +17,9 @@ public class ValidateError {
     public String toString() {
         //TODO 按照某种特定格式进行输出错误
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("Unpassed annotation:")
-            .append(checkItem.getAnnotation().getClass().getName()).append("Unpassed field: ")
-            .append(checkItem.getFieldName()).append("Unpassed value: ").append(checkItem.getObj());
+        stringBuffer.append("Unpassed: @")
+            .append(checkItem.getAnnotation().annotationType().getSimpleName()).append(" field: ")
+            .append(checkItem.getFieldName()).append(" value: ").append(checkItem.getObj());
         return stringBuffer.toString();
     }
 }

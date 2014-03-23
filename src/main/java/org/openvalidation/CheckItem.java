@@ -1,4 +1,4 @@
-package org.bevoid.openvalidation;
+package org.openvalidation;
 
 import java.lang.annotation.Annotation;
 

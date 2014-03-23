@@ -1,12 +1,14 @@
-package org.bevoid.openvalidation;
+package org.openvalidation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bevoid.openvalidation.handler.AnnotationHandler;
-import org.bevoid.openvalidation.handler.AnnotationHandlerFinder;
+import org.openvalidation.handler.AnnotationHandler;
+import org.openvalidation.handler.AnnotationHandlerFinder;
+import org.openvalidation.util.ReflectUtil;
 
 /**
  * 这是验证的主类，并且希望成为用户使用OpenValidation会用到的直接一个接口，意思是为了完成验证用尽量少的类。 <br/>
@@ -16,6 +18,8 @@ import org.bevoid.openvalidation.handler.AnnotationHandlerFinder;
  * @version $Id: Validate.java, v 0.1 2014年3月19日 下午3:06:46 Bevoid Exp $
  */
 public class Validation {
+
+    private final static String ANNOTATION_PACKAGE_NAME = "org.openvalidation.annotation";
 
     private List<ValidateError> validateError;
 
@@ -34,11 +38,43 @@ public class Validation {
         try {
             for (Field field : bean.getClass().getDeclaredFields()) {
                 for (Annotation annotation : field.getAnnotations()) {
-                    if (annotation.annotationType().getName()
-                        .startsWith("org.bevoid.openvalidation.annotation")) {
-                        CheckItem checkItem = new CheckItem(annotation, field.get(bean),
-                            field.getName());
-                        checkItemList.add(checkItem);
+                    if (annotation.annotationType().getName().startsWith(ANNOTATION_PACKAGE_NAME)) {
+                        // Access the object through field.
+                        boolean flagToGetValueByField = true;
+                        Object obj = null;
+                        try {
+                            obj = field.get(bean);
+                        } catch (Exception e) {
+                            flagToGetValueByField = false;
+                        }
+                        if (flagToGetValueByField) {
+                            CheckItem checkItem = new CheckItem(annotation, obj, field.getName());
+                            checkItemList.add(checkItem);
+                        } else { // If failed, access the object through getter method.
+                            boolean flagToGetValueByMethod = false;
+                            for (Method method : bean.getClass().getDeclaredMethods()) {
+                                String getMethodName = ReflectUtil
+                                    .getGetMethodName(field.getName());
+                                if (method.getGenericParameterTypes().length == 0
+                                    && method.getName().equals(getMethodName)) {
+                                    try {
+                                        CheckItem checkItem = new CheckItem(annotation,
+                                            method.invoke(bean), field.getName());
+                                        checkItemList.add(checkItem);
+                                        flagToGetValueByMethod = true;
+                                    } catch (Exception e) {
+                                    }
+                                }
+                            }
+                            if (!flagToGetValueByMethod) {
+                                throw new RuntimeException(
+                                    "The annoation @"
+                                            + annotation.annotationType().getName()
+                                            + " on field "
+                                            + field.getName()
+                                            + " is not accessible, and not exist a corresponding getter method.");
+                            }
+                        }
                     }
                 }
             }
